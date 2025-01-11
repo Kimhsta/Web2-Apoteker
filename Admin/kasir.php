@@ -19,8 +19,8 @@ $result->execute();
 $queryResult = $result->get_result();
 ?>
 
-<section class="container">
-    <div class="mt-5">
+<section class="">
+    <div class="content mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <!-- Judul -->
             <h2 class="fw-bold text-dark mb-0">Data Kasir</h2>
@@ -42,7 +42,7 @@ $queryResult = $result->get_result();
             </div>
         </div>
 
-        <div class="border border-secondary border-opacity-75 p-2 mb-2 rounded-3 overflow-hidden">
+        <div class="border bg-white border-secondary border-opacity-75 p-2 mb-2 rounded-3 overflow-hidden">
             <table class="table table-hover align-middle" id="kasirTable">
                 <thead class="bg-primary text-white">
                     <tr>
