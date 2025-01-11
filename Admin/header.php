@@ -187,7 +187,7 @@ $adminName = $_SESSION['admin_name'];
             <i class="bx bx-capsule sidebar__icon"></i>
             <span class="sidebar__text">Obat</span>
         </a>
-        <a href="#" class="sidebar__link">
+        <a href="transaksi.php" class="sidebar__link">
             <i class="bx bx-shopping-bag sidebar__icon"></i>
             <span class="sidebar__text">Penjualan</span>
         </a>

@@ -72,10 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- Gambar Obat -->
         <div class="mb-3">
-            <label for="gambar" class="form-label">Gambar Obat</label>
+            <label for="gambar" class="form-label">Gambar</label>
             <input type="file" class="form-control" id="gambar" name="gambar">
-            <p class="text-muted mt-2">Gambar saat ini:</p>
-            <img src="../Assets/uploads/<?= $obat['gambar']; ?>" alt="Gambar Obat" style="width: 50px; height: 50px; object-fit: cover;">
+            <p class="form-text">Upload foto baru jika ingin mengganti foto gambar.</p>
         </div>
 
         <!-- Jenis Obat -->
