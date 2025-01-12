@@ -73,6 +73,9 @@ $queryResult = $result->get_result();
                                 <button class="btn btn-danger btn-sm rounded-2" onclick="confirmDelete('<?= $row['id']; ?>')">
                                     <i class="bx bx-trash"></i> Delete
                                 </button>
+                                <button class="btn btn-success btn-sm rounded-2" onclick="printPetugas('<?= $row['id']; ?>')">
+                                    <i class="bx bx-printer"></i> Print
+                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -182,5 +185,11 @@ $queryResult = $result->get_result();
         if (confirm("Apakah Anda yakin ingin menghapus Kasir ini?")) {
             window.location.href = "delete_kasir.php?id_kasir=" + id_kasir;
         }
+    }
+
+    // Function to print Kasir
+    function printPetugas(id_kasir) {
+        const printWindow = window.open(`print_kasir.php?id_kasir=${id_kasir}`, '_blank');
+        printWindow.focus();
     }
 </script>

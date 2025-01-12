@@ -175,7 +175,7 @@ $adminName = $_SESSION['admin_name'];
                 <img class="sidebar__text" src="../Assets/img/LOGO.svg" alt="Logo Apoteker">
             </div>
         </div>
-        <a href="#" class="sidebar__link active">
+        <a href="dashboard.php" class="sidebar__link active">
             <i class="bx bx-grid-alt sidebar__icon"></i>
             <span class="sidebar__text">Dashboard</span>
         </a>

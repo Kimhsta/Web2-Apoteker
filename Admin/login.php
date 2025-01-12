@@ -20,7 +20,7 @@ try {
             session_start();
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_name'] = $user['nama'];
-            header("Location: header.php");
+            header("Location: dashboard.php");
             exit;
         } else {
             $error = "Invalid username or password!";
