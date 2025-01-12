@@ -1,6 +1,6 @@
 # Web2-Apoteker
 
-![Banner](https://via.placeholder.com/1200x400?text=Web2-Apoteker+Project)
+![Banner](Assets/Screnshoot/admin.png)
 
 ## 🏥 Deskripsi Proyek
 
@@ -67,6 +67,7 @@ Web2-Apoteker/
 ## 🧪 Testing
 
 Untuk menjalankan pengujian aplikasi:
+
 ```bash
 npm test
 ```
