@@ -48,7 +48,7 @@ $queryResult = $result->get_result();
             <table class="table table-hover align-middle" id="transaksiTable">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="text-center">ID Transaksi</th>
+                        <th class="text-center">ID</th>
                         <th>Kasir</th>
                         <th>Obat</th>
                         <th>Jumlah</th>
