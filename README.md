@@ -95,10 +95,10 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 Jika ada pertanyaan, silakan hubungi:
 
-- **Nama**: Eka Rizki Suwarno
-- **Email**: ekarizkisuwarno@gmail.com
+- **Nama**: Kiki Mahesta
+- **Email**: kimhsta.ti@gmail.com
 - **GitHub**: [Kimhsta](https://github.com/Kimhsta)
 
 ---
 
-> Dibuat dengan ❤️ oleh Eka Rizki Suwarno
+> Dibuat dengan ❤️ oleh Kiki Mahesta
