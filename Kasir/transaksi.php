@@ -26,12 +26,24 @@ $result->execute();
 $queryResult = $result->get_result();
 ?>
 
-<section class="">
+<section>
     <div class="content mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold text-dark mb-0">Data Transaksi</h2>
+            <div class="d-flex align-items-between gap-3">
+                <!-- Pencarian -->
+                <div class="input-group" style="max-width: 200px;">
+                    <span class="input-group-text bg-primary text-white"><i class="bx bx-search"></i></span>
+                    <input type="text" class="form-control" id="search" placeholder="Cari Transaksi..." onkeyup="searchTable()">
+                </div>
+                <!-- Tombol Tambah -->
+                <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#tambahTransaksiModal">
+                    <i class="bx bx-plus"></i> Tambah
+                </button>
+            </div>
         </div>
 
+        <!-- Tabel Data Transaksi -->
         <div class="border bg-white border-secondary border-opacity-75 p-2 mb-2 rounded-3 overflow-hidden">
             <table class="table table-hover align-middle" id="transaksiTable">
                 <thead class="bg-primary text-white">
@@ -72,7 +84,7 @@ $queryResult = $result->get_result();
                 </tbody>
             </table>
 
-            <!-- Navigasi Pagination -->
+            <!-- Pagination -->
             <nav class="mt-4">
                 <ul class="pagination d-flex justify-content-between align-items-center me-4 ms-4">
                     <li class="page-item <?= ($page <= 1) ? 'disabled' : ''; ?>">
@@ -97,32 +109,31 @@ $queryResult = $result->get_result();
         </div>
     </div>
 
-
-    <!-- Modal Tambah Obat -->
-    <div class="modal fade" id="tambahTransakasiModal" tabindex="-1" aria-labelledby="tambahTransakasiLabel" aria-hidden="true">
+    <!-- Modal Tambah Transaksi -->
+    <div class="modal fade" id="tambahTransaksiModal" tabindex="-1" aria-labelledby="tambahTransaksiLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="tambahTransakasiLabel">Tambah Transakasi Baru</h5>
+                    <h5 class="modal-title" id="tambahTransaksiLabel">Tambah Transaksi Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalContent">
-                    <!-- Form akan dimuat di sini menggunakan AJAX -->
+                    <!-- Form AJAX -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Edit Obat -->
-    <div class="modal fade" id="editObatModal" tabindex="-1" aria-labelledby="editObatLabel" aria-hidden="true">
+    <!-- Modal Edit Transaksi -->
+    <div class="modal fade" id="editTransaksiModal" tabindex="-1" aria-labelledby="editTransaksiLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="editObatLabel">Edit Data Obat</h5>
+                    <h5 class="modal-title" id="editTransaksiLabel">Edit Data Transaksi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="editModalContent">
-                    <!-- Form akan dimuat di sini menggunakan AJAX -->
+                    <!-- Form AJAX -->
                 </div>
             </div>
         </div>
@@ -130,7 +141,6 @@ $queryResult = $result->get_result();
 </section>
 
 <script>
-    // Pencarian data dalam tabel
     function searchTable() {
         let input = document.getElementById("search").value.toLowerCase();
         let rows = document.querySelectorAll("#transaksiTable tbody tr");
@@ -139,46 +149,46 @@ $queryResult = $result->get_result();
             row.style.display = text.includes(input) ? "" : "none";
         });
     }
-    // Ajax Tambah Transakasi
+
+    // Tambah Transaksi
     document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('tambahTransaksiModal');
-        const modalContent = document.getElementById('modalContent');
         modal.addEventListener('show.bs.modal', function() {
             fetch('add_transaksi.php')
                 .then(response => response.text())
                 .then(data => {
-                    modalContent.innerHTML = data;
+                    document.getElementById('modalContent').innerHTML = data;
                 })
                 .catch(error => {
-                    modalContent.innerHTML = '<p class="text-danger">Gagal memuat form</p>';
+                    document.getElementById('modalContent').innerHTML = '<p class="text-danger">Gagal memuat form.</p>';
                 });
         });
     });
 
-    // Ajax Edit Obat
-    function loadEditForm(kode_obat) {
+    // Edit Transaksi
+    function loadEditForm(id) {
         const modalContent = document.getElementById('editModalContent');
         modalContent.innerHTML = '<p class="text-center text-muted">Loading...</p>';
-        fetch(`edit_obat.php?kode_obat=${kode_obat}`)
+        fetch(`edit_transaksi.php?id=${id}`)
             .then(response => response.text())
             .then(data => {
                 modalContent.innerHTML = data;
             })
             .catch(error => {
-                modalContent.innerHTML = '<p class="text-danger">Gagal memuat data</p>';
+                modalContent.innerHTML = '<p class="text-danger">Gagal memuat data.</p>';
             });
     }
 
-    // Ajax Delete Obat
-    function confirmDelete(kode_obat) {
-        if (confirm("Apakah Anda yakin ingin menghapus obat ini?")) {
-            window.location.href = "delete_obat.php?kode_obat=" + kode_obat;
+    // Delete Transaksi
+    function confirmDelete(id) {
+        if (confirm("Apakah Anda yakin ingin menghapus transaksi ini?")) {
+            window.location.href = `delete_transaksi.php?id=${id}`;
         }
     }
 
-    // Function to print Obat
-    function printObat(id) {
-        const printWindow = window.open(`print_obat.php?id=${id}`, '_blank');
+    // Print Transaksi
+    function printTransaksi(id) {
+        const printWindow = window.open(`print_transaksi.php?id=${id}`, '_blank');
         printWindow.focus();
     }
 </script>

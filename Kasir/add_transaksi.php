@@ -1,89 +1,77 @@
 <?php
 include('../Config/koneksi.php');
 
-// Mengecek apakah form telah disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Mengambil data dari form
     $id_kasir = $_POST['id_kasir'];
     $kode_produk = $_POST['kode_produk'];
-    $jumlah = $_POST['jumlah'];
+    $jumlah = (int)$_POST['jumlah'];
     $metode_pembayaran = $_POST['metode_pembayaran'];
 
-    // Mendapatkan data harga dari tabel obat
-    $query_obat = $conn->prepare("SELECT harga, stok FROM obat WHERE kode = ?");
-    $query_obat->bind_param("s", $kode_produk);
-    $query_obat->execute();
-    $result_obat = $query_obat->get_result();
+    // Ambil harga obat dari tabel obat
+    $queryObat = $conn->prepare("SELECT harga FROM obat WHERE kode = ?");
+    $queryObat->bind_param("s", $kode_produk);
+    $queryObat->execute();
+    $resultObat = $queryObat->get_result();
 
-    if ($result_obat->num_rows > 0) {
-        $data_obat = $result_obat->fetch_assoc();
-        $harga = $data_obat['harga'];
-        $stok = $data_obat['stok'];
+    if ($resultObat->num_rows > 0) {
+        $rowObat = $resultObat->fetch_assoc();
+        $harga = (float)$rowObat['harga'];
+        $total_harga = $harga * $jumlah; // Hitung total harga
 
-        // Validasi stok cukup
-        if ($stok >= $jumlah) {
-            $total_harga = $harga * $jumlah;
+        // Masukkan data transaksi ke tabel transaksi
+        $queryTransaksi = $conn->prepare("
+            INSERT INTO transaksi (id_kasir, kode_produk, jumlah, total_harga, metode_pembayaran) 
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $queryTransaksi->bind_param("isids", $id_kasir, $kode_produk, $jumlah, $total_harga, $metode_pembayaran);
 
-            // Query untuk menyimpan data transaksi
-            $query = $conn->prepare("INSERT INTO transaksi (id_kasir, kode_produk, jumlah, total_harga, metode_pembayaran, waktu) VALUES (?, ?, ?, ?, ?, NOW())");
-            $query->bind_param("isids", $id_kasir, $kode_produk, $jumlah, $total_harga, $metode_pembayaran);
-
-            if ($query->execute()) {
-                // Update stok obat
-                $stok_baru = $stok - $jumlah;
-                $update_stok = $conn->prepare("UPDATE obat SET stok = ? WHERE kode = ?");
-                $update_stok->bind_param("is", $stok_baru, $kode_produk);
-                $update_stok->execute();
-
-                echo "<script>alert('Transaksi berhasil ditambahkan!'); window.location.href='transaksi.php';</script>";
-            } else {
-                echo "<script>alert('Gagal menambahkan transaksi!'); window.location.href='transaksi.php';</script>";
-            }
+        if ($queryTransaksi->execute()) {
+            echo "<script>alert('Transaksi berhasil ditambahkan!'); window.location.href = 'transaksi.php';</script>";
         } else {
-            echo "<script>alert('Stok tidak mencukupi!'); window.location.href='transaksi.php';</script>";
+            echo "<script>alert('Gagal menambahkan transaksi!'); history.back();</script>";
         }
     } else {
-        echo "<script>alert('Produk tidak ditemukan!'); window.location.href='transaksi.php';</script>";
+        echo "<script>alert('Kode produk tidak ditemukan!'); history.back();</script>";
     }
-}
+} else {
 ?>
-
-<form action="add_transaksi.php" method="POST">
-    <div class="modal-body">
-        <!-- ID Kasir -->
+    <form method="POST" action="add_transaksi.php">
         <div class="mb-3">
-            <label for="id_kasir" class="form-label">ID Kasir</label>
-            <input type="number" class="form-control" id="id_kasir" name="id_kasir" required>
-        </div>
-
-        <!-- Kode Produk -->
-        <div class="mb-3">
-            <label for="kode_produk" class="form-label">Kode Produk</label>
-            <input type="text" class="form-control" id="kode_produk" name="kode_produk" required>
-        </div>
-
-        <!-- Jumlah -->
-        <div class="mb-3">
-            <label for="jumlah" class="form-label">Jumlah</label>
-            <input type="number" class="form-control" id="jumlah" name="jumlah" required>
-        </div>
-
-        <!-- Metode Pembayaran -->
-        <div class="mb-3">
-            <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
-            <select class="form-select" id="metode_pembayaran" name="metode_pembayaran" required>
-                <option value="Tunai">Tunai</option>
-                <option value="OVO">OVO</option>
-                <option value="DANA">DANA</option>
-                <option value="GoPay">GoPay</option>
-                <option value="Kartu Kredit">Kartu Kredit</option>
-                <option value="Transfer Bank">Transfer Bank</option>
+            <label for="id_kasir" class="form-label">Kasir</label>
+            <select name="id_kasir" id="id_kasir" class="form-select" required>
+                <?php
+                $kasirQuery = $conn->query("SELECT id, nama FROM kasir");
+                while ($kasir = $kasirQuery->fetch_assoc()) {
+                    echo "<option value='{$kasir['id']}'>{$kasir['nama']}</option>";
+                }
+                ?>
             </select>
         </div>
-    </div>
-
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <div class="mb-3">
+            <label for="kode_produk" class="form-label">Obat</label>
+            <select name="kode_produk" id="kode_produk" class="form-select" required>
+                <?php
+                $obatQuery = $conn->query("SELECT kode, nama FROM obat");
+                while ($obat = $obatQuery->fetch_assoc()) {
+                    echo "<option value='{$obat['kode']}'>{$obat['nama']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="jumlah" class="form-label">Jumlah</label>
+            <input type="number" name="jumlah" id="jumlah" class="form-control" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
+            <select name="metode_pembayaran" id="metode_pembayaran" class="form-select" required>
+                <option value="Cash">Cash</option>
+                <option value="Transfer">Transfer</option>
+                <option value="E-Wallet">E-Wallet</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Tambah Transaksi</button>
-    </div>
-</form>
+    </form>
+<?php
+}
+?>

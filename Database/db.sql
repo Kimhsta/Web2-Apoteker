@@ -49,7 +49,7 @@ CREATE TABLE transaksi (
   kode_produk VARCHAR(10) NOT NULL,
   jumlah INT NOT NULL,
   total_harga DECIMAL(10, 2) NOT NULL,
-  metode_pembayaran ENUM('Kes', 'Transfer') NOT NULL,
+  metode_pembayaran ENUM('Cash', 'Transfer', 'E-Wallet') NOT NULL,
   waktu TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (id_kasir) REFERENCES kasir(id),
   FOREIGN KEY (kode_produk) REFERENCES obat(kode)
