@@ -76,6 +76,9 @@ $queryResult = $result->get_result();
                                 <button class="btn btn-danger btn-sm rounded-2" onclick="confirmDelete('<?= $row['kode']; ?>')">
                                     <i class="bx bx-trash"></i> Delete
                                 </button>
+                                <button class="btn btn-success btn-sm rounded-2" onclick="printPetugas('<?= $row['kode']; ?>')">
+                                    <i class="bx bx-printer"></i> Print
+                                </button>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -185,5 +188,11 @@ $queryResult = $result->get_result();
         if (confirm("Apakah Anda yakin ingin menghapus obat ini?")) {
             window.location.href = "delete_obat.php?kode_obat=" + kode_obat;
         }
+    }
+
+    // Function to print Obat
+    function printPetugas(kode_obat) {
+        const printWindow = window.open(`print_obat.php?kode_obat=${kode_obat}`, '_blank');
+        printWindow.focus();
     }
 </script>
