@@ -4,7 +4,7 @@ include('../Config/koneksi.php');
 include('header.php');
 
 // Cek apakah session sudah ada, jika tidak maka alihkan ke halaman login
-if (!isset($_SESSION['admin_logged_in'])) {
+if (!isset($_SESSION['kasir_logged_in'])) {
     header('Location: login.php');
     exit;
 }
@@ -52,7 +52,7 @@ $pendapatan_data = $pendapatan_result->fetch_assoc();
                     <img src="../Assets/uploads/<?= htmlspecialchars($profil_gambar); ?>" alt="Profile Image" class="profile-img me-3" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                     <div>
                         <h6 class="fw-bold mb-0"><?= htmlspecialchars($user_name); ?></h6>
-                        <p class="mb-0 text-muted">Admin</p>
+                        <p class="mb-0 text-muted">Kasir</p>
                     </div>
                 </div>
             </div>

@@ -33,13 +33,6 @@ $queryResult = $result->get_result();
                     <span class="input-group-text bg-primary text-white"><i class="bx bx-search"></i></span>
                     <input type="text" class="form-control" id="search" placeholder="Cari Obat..." onkeyup="searchTable()">
                 </div>
-
-                <!-- Tombol Tambah Obat -->
-                <div>
-                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#tambahObatModal">
-                        <i class="bx bx-plus"></i> Tambah
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -70,13 +63,7 @@ $queryResult = $result->get_result();
                             <td><?= $row['kategori']; ?></td>
                             <td><?= "Rp. " . number_format($row['harga'], 2, ',', '.'); ?></td>
                             <td class="text-center">
-                                <button class="btn btn-warning btn-sm rounded-2" data-bs-toggle="modal" data-bs-target="#editObatModal" onclick="loadEditForm('<?= $row['kode']; ?>')">
-                                    <i class="bx bx-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-danger btn-sm rounded-2" onclick="confirmDelete('<?= $row['kode']; ?>')">
-                                    <i class="bx bx-trash"></i> Delete
-                                </button>
-                                <button class="btn btn-success btn-sm rounded-2" onclick="printObat('<?= $row['kode']; ?>')">
+                                <button class="btn btn-success btn-sm rounded-2" onclick="printPetugas('<?= $row['kode']; ?>')">
                                     <i class="bx bx-printer"></i> Print
                                 </button>
                             </td>
@@ -112,35 +99,6 @@ $queryResult = $result->get_result();
         </div>
     </div>
 
-    <!-- Modal Tambah Obat -->
-    <div class="modal fade" id="tambahObatModal" tabindex="-1" aria-labelledby="tambahObatLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="tambahObatLabel">Tambah Obat Baru</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalContent">
-                    <!-- Form akan dimuat di sini menggunakan AJAX -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Edit Obat -->
-    <div class="modal fade" id="editObatModal" tabindex="-1" aria-labelledby="editObatLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="editObatLabel">Edit Data Obat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="editModalContent">
-                    <!-- Form akan dimuat di sini menggunakan AJAX -->
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 
 <script>
@@ -153,45 +111,8 @@ $queryResult = $result->get_result();
         });
     }
 
-    // Ajax Tambah Obat
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('tambahObatModal');
-        const modalContent = document.getElementById('modalContent');
-        modal.addEventListener('show.bs.modal', function() {
-            fetch('add_Obat.php')
-                .then(response => response.text())
-                .then(data => {
-                    modalContent.innerHTML = data;
-                })
-                .catch(error => {
-                    modalContent.innerHTML = '<p class="text-danger">Gagal memuat form</p>';
-                });
-        });
-    });
-
-    // Ajax Edit Obat
-    function loadEditForm(kode_obat) {
-        const modalContent = document.getElementById('editModalContent');
-        modalContent.innerHTML = '<p class="text-center text-muted">Loading...</p>';
-        fetch(`edit_obat.php?kode_obat=${kode_obat}`)
-            .then(response => response.text())
-            .then(data => {
-                modalContent.innerHTML = data;
-            })
-            .catch(error => {
-                modalContent.innerHTML = '<p class="text-danger">Gagal memuat data</p>';
-            });
-    }
-
-    // Ajax Delete Obat
-    function confirmDelete(kode_obat) {
-        if (confirm("Apakah Anda yakin ingin menghapus obat ini?")) {
-            window.location.href = "delete_obat.php?kode_obat=" + kode_obat;
-        }
-    }
-
     // Function to print Obat
-    function printObat(kode_obat) {
+    function printPetugas(kode_obat) {
         const printWindow = window.open(`print_obat.php?kode_obat=${kode_obat}`, '_blank');
         printWindow.focus();
     }

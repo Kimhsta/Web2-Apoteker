@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -167,10 +166,6 @@
         <a href="dashboard.php" class="sidebar__link active">
             <i class="bx bx-grid-alt sidebar__icon"></i>
             <span class="sidebar__text">Dashboard</span>
-        </a>
-        <a href="kasir.php" class="sidebar__link">
-            <i class="bx bx-wallet sidebar__icon"></i>
-            <span class="sidebar__text">Kasir</span>
         </a>
         <a href="obat.php" class="sidebar__link">
             <i class="bx bx-capsule sidebar__icon"></i>
