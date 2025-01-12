@@ -167,6 +167,10 @@
             <i class="bx bx-grid-alt sidebar__icon"></i>
             <span class="sidebar__text">Dashboard</span>
         </a>
+        <a href="owner.php" class="sidebar__link">
+            <i class="bx bx-cog sidebar__icon"></i>
+            <span class="sidebar__text">Owner</span>
+        </a>
         <a href="obat.php" class="sidebar__link">
             <i class="bx bx-capsule sidebar__icon"></i>
             <span class="sidebar__text">Obat</span>
