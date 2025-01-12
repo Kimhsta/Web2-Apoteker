@@ -1,34 +1,42 @@
 <?php
-// Load database configuration
-$config = include('../Config/database.php');
+// Include koneksi
+include('../Config/koneksi.php');
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $inputUsername = $_POST['username'];
         $inputPassword = $_POST['password'];
 
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND role = 'Owner'");
-        $stmt->execute(['username' => $inputUsername]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Query untuk mencocokkan username dan password di tabel owners
+        $query = "SELECT * FROM owners WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $inputUsername);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-        if ($user && password_verify($inputPassword, $user['password'])) {
+        // Verifikasi password
+        if ($user && $inputPassword === $user['password']) {
+            session_start();
             $_SESSION['owner_logged_in'] = true;
-            $_SESSION['owner_name'] = $user['nama'];
-            header("Location: owner_dashboard.php");
+            $_SESSION['user_id'] = $user['id'];  // Simpan ID pengguna
+            $_SESSION['user_name'] = $user['nama'];  // Simpan nama pengguna
+            $_SESSION['user_profile'] = $user['profil'];  // Simpan profil pengguna
+
+            header("Location: dashboard.php");
             exit;
         } else {
             $error = "Invalid username or password!";
         }
     }
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +83,7 @@ try {
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -83,7 +92,7 @@ try {
                     <div class="text-center mb-4 mt-4">
                         <img src="../Assets/img/LOGO.svg" alt="Logo" class="img-fluid" style="width: 150px;">
                     </div>
-                    <form method="POST" action="owner.php">
+                    <form method="POST" action="">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required>
@@ -110,4 +119,5 @@ try {
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
