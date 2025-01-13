@@ -60,7 +60,7 @@ $queryResult = $result->get_result();
                         <tr>
                             <td class="text-center"><?= $row['id']; ?></td>
                             <td>
-                                <img src="../Assets/Kasir/<?= $row['profil']; ?>" alt="Profil Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 25%;">
+                                <img src="../Assets/Kasir/<?= $row['profil']; ?>" alt="Profil Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                             </td>
                             <td><?= $row['nama']; ?></td>
                             <td><?= $row['username']; ?></td>
