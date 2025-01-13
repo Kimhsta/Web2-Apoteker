@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Jika gambar baru diupload
     if (!empty($gambar)) {
-        $targetDir = "../Assets/uploads/";
+        $targetDir = "../Assets/Obat/";
         $targetFile = $targetDir . basename($gambar);
         move_uploaded_file($_FILES['gambar']['tmp_name'], $targetFile);
 

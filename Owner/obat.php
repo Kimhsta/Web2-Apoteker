@@ -56,7 +56,7 @@ $queryResult = $result->get_result();
                             <td class="text-center"><?= $row['kode']; ?></td>
                             <td><?= $row['nama']; ?></td>
                             <td>
-                                <img src="../Assets/uploads/<?= $row['gambar']; ?>" alt="Gambar Obat" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="Gambar Obat" style="width: 50px; height: 50px; object-fit: cover;">
                             </td>
                             <td><?= $row['stok']; ?></td>
                             <td><?= $row['jenis_obat']; ?></td>
