@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validasi file profil
     if ($profil['error'] === 0) {
-        $uploadDir = '../Assets/uploads/';
+        $uploadDir = '../Assets/Kasir/';
         $fileName = uniqid() . '_' . basename($profil['name']);
         $uploadPath = $uploadDir . $fileName;
 

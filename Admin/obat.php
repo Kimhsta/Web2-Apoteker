@@ -47,9 +47,9 @@ $queryResult = $result->get_result();
             <table class="table table-hover align-middle" id="obatTable">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="text-center">Kode</th>
-                        <th>Nama</th>
                         <th>Gambar</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
                         <th>Stok</th>
                         <th>Jenis Obat</th>
                         <th>Kategori</th>
@@ -60,11 +60,11 @@ $queryResult = $result->get_result();
                 <tbody>
                     <?php while ($row = $queryResult->fetch_assoc()): ?>
                         <tr>
-                            <td class="text-center"><?= $row['kode']; ?></td>
-                            <td><?= $row['nama']; ?></td>
                             <td>
-                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="Gambar Obat" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="gambar obat" style="width: 180px; height: 180px; object-fit: cover;">
                             </td>
+                            <td><?= $row['kode']; ?></td>
+                            <td><?= $row['nama']; ?></td>
                             <td><?= $row['stok']; ?></td>
                             <td><?= $row['jenis_obat']; ?></td>
                             <td><?= $row['kategori']; ?></td>

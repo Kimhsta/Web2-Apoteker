@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validasi ekstensi file
         if (in_array(strtolower($fileExt), $allowedExt)) {
-            $uploadDir = '../Assets/uploads/';
+            $uploadDir = '../Assets/Kasir/';
             $newFileName = 'kasir_' . $id_kasir . '.' . $fileExt;
             $filePath = $uploadDir . $newFileName;
 
