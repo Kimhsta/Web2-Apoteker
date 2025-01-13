@@ -36,10 +36,6 @@ $queryResult = $result->get_result();
                     <span class="input-group-text bg-primary text-white"><i class="bx bx-search"></i></span>
                     <input type="text" class="form-control" id="search" placeholder="Cari Transaksi..." onkeyup="searchTable()">
                 </div>
-                <!-- Tombol Tambah -->
-                <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#tambahTransaksiModal">
-                    <i class="bx bx-plus"></i> Tambah
-                </button>
             </div>
         </div>
 

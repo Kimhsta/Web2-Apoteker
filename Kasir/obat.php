@@ -3,7 +3,7 @@ include('../Config/koneksi.php');
 include('header.php');
 
 // Pagination logic
-$limit = 10; // Jumlah data per halaman
+$limit = 5; // Jumlah data per halaman
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman saat ini
 $offset = ($page - 1) * $limit;
 
@@ -40,9 +40,9 @@ $queryResult = $result->get_result();
             <table class="table table-hover align-middle" id="obatTable">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="text-center">Kode</th>
-                        <th>Nama</th>
                         <th>Gambar</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
                         <th>Stok</th>
                         <th>Jenis Obat</th>
                         <th>Kategori</th>
@@ -53,11 +53,11 @@ $queryResult = $result->get_result();
                 <tbody>
                     <?php while ($row = $queryResult->fetch_assoc()): ?>
                         <tr>
+                            <td>
+                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="Gambar Obat" style="width: 110px; height: 110px; object-fit: cover;">
+                            </td>
                             <td class="text-center"><?= $row['kode']; ?></td>
                             <td><?= $row['nama']; ?></td>
-                            <td>
-                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="Gambar Obat" style="width: 50px; height: 50px; object-fit: cover;">
-                            </td>
                             <td><?= $row['stok']; ?></td>
                             <td><?= $row['jenis_obat']; ?></td>
                             <td><?= $row['kategori']; ?></td>

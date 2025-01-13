@@ -3,7 +3,7 @@ include('../Config/koneksi.php');
 include('header.php');
 
 // Pagination logic
-$limit = 10; // Jumlah data per halaman
+$limit = 5; // Jumlah data per halaman
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman saat ini
 $offset = ($page - 1) * $limit;
 
@@ -61,7 +61,7 @@ $queryResult = $result->get_result();
                     <?php while ($row = $queryResult->fetch_assoc()): ?>
                         <tr>
                             <td>
-                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="gambar obat" style="width: 180px; height: 180px; object-fit: cover;">
+                                <img src="../Assets/Obat/<?= $row['gambar']; ?>" alt="gambar obat" style="width: 110px; height: 110px; object-fit: cover;">
                             </td>
                             <td><?= $row['kode']; ?></td>
                             <td><?= $row['nama']; ?></td>

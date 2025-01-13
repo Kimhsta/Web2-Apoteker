@@ -6,7 +6,8 @@ $id_transaksi = $_GET['id'];
 
 // Query untuk mengambil data transaksi berdasarkan ID
 $query = $conn->prepare("
-    SELECT t.id, t.id_kasir, t.kode_produk, t.jumlah, t.total_harga, t.metode_pembayaran, t.waktu, k.nama AS nama_kasir, o.nama AS nama_obat
+    SELECT t.id, t.id_kasir, t.kode_produk, t.jumlah, t.total_harga, t.metode_pembayaran, t.waktu, 
+           k.nama AS nama_kasir, o.nama AS nama_obat, o.harga AS harga_obat
     FROM transaksi t 
     JOIN kasir k ON t.id_kasir = k.id 
     JOIN obat o ON t.kode_produk = o.kode 
@@ -77,7 +78,7 @@ if (!$transaksi) {
         }
 
         .logo {
-            max-width: 60px;
+            max-width: 125px;
             height: auto;
             margin-right: 20px;
         }
@@ -204,11 +205,9 @@ if (!$transaksi) {
     <div class="container">
         <header class="header">
             <div class="logo-container">
-                <img src="../logo.png" alt="Logo Apotek" class="logo">
                 <div class="hospital-info">
-                    <h1>Apotek Sehat</h1>
-                    <p>Jl. Contoh No. 123, Kota</p>
-                    <p>Telp: (021) 1234-5678</p>
+                    <img src="../Assets/img/LOGO.svg" alt="Logo Apotek" class="logo">
+                    <p> Jl. Tasyuka No. 11, Kota Surakarta. Telp: (021) 8441-5628</p>
                 </div>
             </div>
             <div class="nota-info">
@@ -227,6 +226,7 @@ if (!$transaksi) {
             <thead>
                 <tr>
                     <th>Obat</th>
+                    <th>Harga Satuan</th>
                     <th>Jumlah</th>
                     <th>Total Harga</th>
                 </tr>
@@ -234,16 +234,15 @@ if (!$transaksi) {
             <tbody>
                 <tr>
                     <td><?= $transaksi['nama_obat']; ?></td>
+                    <td>Rp <?= number_format($transaksi['harga_obat'], 2, ',', '.'); ?></td>
                     <td><?= $transaksi['jumlah']; ?></td>
-                    <td>Rp. <?= number_format($transaksi['total_harga'], 2, ',', '.'); ?></td>
+                    <td>Rp <?= number_format($transaksi['total_harga'], 2, ',', '.'); ?></td>
                 </tr>
             </tbody>
         </table>
 
         <div class="total-section">
-            <div class="total-item">
-                <strong>Total:</strong> Rp. <?= number_format($transaksi['total_harga'], 2, ',', '.'); ?>
-            </div>
+            <div class="total-item"><strong>Grand Total:</strong> Rp <?= number_format($transaksi['total_harga'], 2, ',', '.'); ?></div>
         </div>
     </div>
 </body>
